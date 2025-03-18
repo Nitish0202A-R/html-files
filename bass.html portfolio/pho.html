@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Photo Album</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .album-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .album-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        .album-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .album-item img:hover {
+            transform: scale(1.1);
+        }
+
+        .album-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            color: rgb(153, 49, 49);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .album-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay-text {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="album-container">
+        <div class="album-item">
+            <img src="g:\img1.jpeg" alt="Image 1">
+                <div class="overlay-text">Image 1</div>
+            </div>
+        </div>
+        <div class="album-item">
+            <img src="g:\img2.jpeg" alt="Image 2">
+            <div class="overlay">
+                <div class="overlay-text">Image 2</div>
+            </div>
+        </div>
+        <div class="album-item">
+            <img src="g:\img3.jpeg" alt="Image 3">
+            <div class="overlay">
+                <div class="overlay-text">Image 3</div>
+            </div>
+        </div>
+        <div class="album-item">
+            <img src="img/OIP.jpg" alt="Image 4">
+            <div class="overlay">
+                <div class="overlay-text">Image 4</div>
+            </div>
+        </div>
+        <!-- Add more items as needed -->
+    </div>
+</body>
+</html>

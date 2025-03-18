@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .calendar-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header h2 {
+            margin: 0;
+        }
+
+        .calendar-header button {
+            padding: 5px 15px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .calendar-header button:hover {
+            background-color: #0056b3;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .calendar-days div {
+            padding: 10px;
+            font-size: 18px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .calendar-days .day-name {
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .calendar-days .date {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .calendar-days .date:hover {
+            background-color: #e9ecef;
+        }
+
+        .calendar-days .current-day {
+            background-color: #ffc107;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <button id="prevMonth">Prev</button>
+            <h2 id="monthName"></h2>
+            <button id="nextMonth">Next</button>
+        </div>
+
+        <div class="calendar-days" id="calendarDays"></div>
+    </div>
+
+    <script>
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        let currentDate = new Date();
+
+        // Function to display the calendar
+        function displayCalendar() {
+            const currentMonth = currentDate.getMonth();
+            const currentYear = currentDate.getFullYear();
+
+            // Display month and year
+            document.getElementById('monthName').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+            // Get first day of the month and total days in the month
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+            // Generate the calendar days
+            const calendarDays = document.getElementById('calendarDays');
+            calendarDays.innerHTML = '';
+            // Add day names to the calendar
+            daysOfWeek.forEach(day => {
+                const dayName = document.createElement('div');
+                dayName.classList.add('day-name');
+                dayName.textContent = day;
+                calendarDays.appendChild(dayName);
+            });
+            // Add empty divs for leading spaces (days before the first day of the month)
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDiv = document.createElement('div');
+                calendarDays.appendChild(emptyDiv);
+            }
+            // Add the dates
+            for (let day = 1; day <= totalDays; day++) {
+                const dateDiv = document.createElement('div');
+                dateDiv.classList.add('date');
+
+                // Highlight the current day
+                if (day === currentDate.getDate() && currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear()) {
+                    dateDiv.classList.add('current-day');
+                }
+
+                dateDiv.textContent = day;
+                calendarDays.appendChild(dateDiv);
+            }
+        }
+        // Function to change to the previous month
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            displayCalendar();
+        });
+        // Function to change to the next month
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            displayCalendar();
+        });
+
+        // Display the current month calendar on initial load
+        displayCalendar();
+    </script>
+
+</body>
+</html>
